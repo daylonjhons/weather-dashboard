@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="head">
+    <h1>Weather Dashboard</h1>
+  </div>
+  <form id="search-form">
+    <div id="search">
+      <h3>Search for a City:</h3>
+      <input type="text" id="city-search" placeholder="Enter a City" />
+      <button type="submit" id="search-button">Search</button>
+    </div>
+  </form>
+  <div id="previous-search"></div>
+  <div id="current-search">
+    <p id="current-city"></p>
+    <p id="icon"></p>
+    <p id="temp"></p>
+    <p id="wind"></p>
+    <p id="humid"></p>
+    <p id="description"></p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
+
