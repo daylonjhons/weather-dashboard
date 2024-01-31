@@ -13,3 +13,22 @@ var previousCitySearches = [];
 
 var date = dayjs();
 var currentDate = date.format("MM/DD/YYYY");
+
+var lon, lat, state, temp, wind, humidity, description, icon, iconImg, iconVar;
+var apiKey = "aabca1893f2719756c7db71cc89ba0af";
+
+var parsedCities = localStorage.getItem("cities");
+console.log(parsedCities);
+if (parsedCities) {
+  previousCitySearches = JSON.parse(parsedCities);
+  for (let i = 0; i < previousCitySearches.length; i++) {
+    var cityName = document.createElement("button");
+    cityName.classList.add("previous-btn");
+    cityName.textContent = previousCitySearches[i];
+    cityName.addEventListener("click", function () {
+      searchedCityEl.value = previousCitySearches[i];
+      getLocation(new Event("click"));
+    });
+    previousSearchEl.appendChild(cityName);
+  }
+}
