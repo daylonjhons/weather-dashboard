@@ -32,3 +32,8 @@ if (parsedCities) {
     previousSearchEl.appendChild(cityName);
   }
 }
+
+function capitalizeFirstLetter(str) {
+    return str.replace(/\b\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  }
+  
