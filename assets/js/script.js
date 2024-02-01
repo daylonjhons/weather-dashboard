@@ -35,13 +35,13 @@ if (parsedCities) {
 
 function capitalizeFirstLetter(str) {
     return str.replace(/\b\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-  }
+}
 
-  function getLocation(event) {
+function getLocation(event) {
     event.preventDefault();
     currentCity = capitalizeFirstLetter(searchedCityEl.value);
     var urlGeo =
-      "http://api.openweathermap.org/geo/1.0/direct?q=" +
+      "https://api.openweathermap.org/geo/1.0/direct?q=" +
       currentCity +
       "&appid=" +
       apiKey;
@@ -65,23 +65,23 @@ function capitalizeFirstLetter(str) {
       .catch(function (error) {
         alert(error.message);
       });
-  }
-  
-  function updateCurrentCity() {
+}
+
+function updateCurrentCity() {
     currentCityEl.textContent = `${currentCity} (${currentDate})`;
     searchedCityEl.value = "";
-  
+
     if (!previousCitySearches.includes(currentCity)) {
       previousCitySearches.unshift(currentCity);
     }
-  
+
     previousCitySearches = Array.from(new Set(previousCitySearches));
-  
+
     var stringifiedCity = JSON.stringify(previousCitySearches);
     localStorage.setItem("cities", stringifiedCity);
-  
+
     previousSearchEl.innerHTML = "";
-  
+
     for (let i = 0; i < previousCitySearches.length; i++) {
       var cityName = document.createElement("button");
       cityName.classList.add("previous-btn");
@@ -92,9 +92,9 @@ function capitalizeFirstLetter(str) {
       });
       previousSearchEl.appendChild(cityName);
     }
-  }
-  
-  function getWeather(lat, lon, state) {
+}
+
+function getWeather(lat, lon, state) {
     var urlCurrentWeather =
       "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=" +
       lat +
@@ -115,17 +115,17 @@ function capitalizeFirstLetter(str) {
         getFuture(lat, lon);
         updateCurrentWeather(temp, wind, humidity);
       });
-  }
-  
-  function updateCurrentWeather(temp, wind, humidity) {
+}
+
+function updateCurrentWeather(temp, wind, humidity) {
     tempEl.textContent = `Temp: ${temp}°F`;
     windEl.textContent = `Wind: ${wind} MPH`;
     humidEl.textContent = `Humidity: ${humidity}%`;
     iconImg = document.createElement("img");
     iconImg.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-  }
-  
-  function getFuture(lat, lon) {
+}
+
+function getFuture(lat, lon) {
     var urlFutureForecast =
       "https://api.openweathermap.org/data/2.5/forecast?units=imperial&cnt=5&lat=" +
       lat +
@@ -141,47 +141,46 @@ function capitalizeFirstLetter(str) {
         console.log(data);
         var forecastContainer = document.getElementById("forecast-container");
         forecastContainer.innerHTML = "";
-  
+
         for (var i = 0; i < 5; i++) {
           var x = i + 1;
           var tomorrow = dayjs().add(x, "day").format("M/D/YYYY");
-  
+
           var forecastDiv = document.createElement("div");
           forecastDiv.classList.add("future");
           forecastDiv.id = `day-${x}`;
-  
+
           var dateElement = document.createElement("p");
           dateElement.id = `day-${x}-date`;
           dateElement.textContent = tomorrow;
           forecastDiv.appendChild(dateElement);
-  
+
           var tempElement = document.createElement("p");
           tempElement.id = `day-${x}-temp`;
           tempElement.textContent = `Temp: ${Math.round(data.list[i].main.temp)}°F`;
           forecastDiv.appendChild(tempElement);
-  
+
           var windElement = document.createElement("p");
           windElement.id = `day-${x}-wind`;
           windElement.textContent = `Wind: ${Math.round(data.list[i].wind.speed)}MPH`;
           forecastDiv.appendChild(windElement);
-  
+
           var humidityElement = document.createElement("p");
           humidityElement.id = `day-${x}-humidity`;
           humidityElement.textContent = `Humidity: ${data.list[i].main.humidity}%`;
           forecastDiv.appendChild(humidityElement);
-  
+
           var descriptionElement = document.createElement("p");
           descriptionElement.id = `day-${x}-description`;
           descriptionElement.textContent = data.list[i].weather[0].description;
           forecastDiv.appendChild(descriptionElement);
-  
+
           forecastContainer.appendChild(forecastDiv);
         }
       })
       .catch(function (error) {
         console.error("Error fetching forecast data:", error);
       });
-  }
-  
+}
 
 document.getElementById("search-form").addEventListener("submit", getLocation);
