@@ -128,3 +128,20 @@ body {
     margin: 5px 0;
 }
 
+@media screen and (max-width: 768px) {
+    #head {
+        padding-right: 20px;
+    }
+
+    #search {
+        grid-column: 1 / span 2;
+    }
+
+    #current-search {
+        grid-column: 1 / span 2;
+    }
+
+    #five-day {
+        grid-column: 1 / span 2;
+    }
+}

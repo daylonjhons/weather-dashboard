@@ -6,4 +6,4 @@ This weather dashboard is designed to cater to the needs of travelers who seek d
 
 Here is a link to the deployed website https://daylonjhons.github.io/weather-dashboard/
 
-Here is a screenshot of the deployed application
+Here is a screenshot of the deployed application ![Alt text](<assets/images/Screenshot 2024-01-31 at 10.52.17 PM.png>)
