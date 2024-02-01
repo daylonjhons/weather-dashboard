@@ -125,3 +125,63 @@ function capitalizeFirstLetter(str) {
     iconImg.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
   }
   
+  function getFuture(lat, lon) {
+    var urlFutureForecast =
+      "https://api.openweathermap.org/data/2.5/forecast?units=imperial&cnt=5&lat=" +
+      lat +
+      "&lon=" +
+      lon +
+      "&appid=" +
+      apiKey;
+    fetch(urlFutureForecast)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        var forecastContainer = document.getElementById("forecast-container");
+        forecastContainer.innerHTML = "";
+  
+        for (var i = 0; i < 5; i++) {
+          var x = i + 1;
+          var tomorrow = dayjs().add(x, "day").format("M/D/YYYY");
+  
+          var forecastDiv = document.createElement("div");
+          forecastDiv.classList.add("future");
+          forecastDiv.id = `day-${x}`;
+  
+          var dateElement = document.createElement("p");
+          dateElement.id = `day-${x}-date`;
+          dateElement.textContent = tomorrow;
+          forecastDiv.appendChild(dateElement);
+  
+          var tempElement = document.createElement("p");
+          tempElement.id = `day-${x}-temp`;
+          tempElement.textContent = `Temp: ${Math.round(data.list[i].main.temp)}°F`;
+          forecastDiv.appendChild(tempElement);
+  
+          var windElement = document.createElement("p");
+          windElement.id = `day-${x}-wind`;
+          windElement.textContent = `Wind: ${Math.round(data.list[i].wind.speed)}MPH`;
+          forecastDiv.appendChild(windElement);
+  
+          var humidityElement = document.createElement("p");
+          humidityElement.id = `day-${x}-humidity`;
+          humidityElement.textContent = `Humidity: ${data.list[i].main.humidity}%`;
+          forecastDiv.appendChild(humidityElement);
+  
+          var descriptionElement = document.createElement("p");
+          descriptionElement.id = `day-${x}-description`;
+          descriptionElement.textContent = data.list[i].weather[0].description;
+          forecastDiv.appendChild(descriptionElement);
+  
+          forecastContainer.appendChild(forecastDiv);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error fetching forecast data:", error);
+      });
+  }
+  
+
+document.getElementById("search-form").addEventListener("submit", getLocation);
